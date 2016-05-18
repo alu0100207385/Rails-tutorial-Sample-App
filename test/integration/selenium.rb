@@ -4,14 +4,14 @@ require 'minitest/autorun'
 require 'rack/test'
 
 include Rack::Test::Methods
-include Test::Unit::Assertion
+include Test::Unit::Assertions
 
 describe "#1. Test" do
 
 	before :all do
 		client = Selenium::WebDriver::Remote::Http::Default.new
 		client.timeout = 600 # seconds
-        #caps = Selenium::WebDriver::Remote::Capabilities.firefox(
+        caps = Selenium::WebDriver::Remote::Capabilities.firefox(
             #:version               => "41",
             #:platform              => "VISTA",
             #:video                 => "True"
@@ -30,6 +30,7 @@ describe "#1. Test" do
 	it "#1 I can access index" do
 	    @driver.get @site
         @driver.find_element(:link_text, "Sing up now!").click
+        sleep 3
 		assert_equal(@driver.find_element(:tag_name, "h1").text, "Sign up")
 	end
 end
