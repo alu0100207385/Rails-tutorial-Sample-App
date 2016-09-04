@@ -8,6 +8,7 @@ class SessionsController < ApplicationController
   	if user && user.authenticate(params[:session][:password])
   		#Log user and redirect to the user's show page
       log_in user
+      remember user
       redirect_to user
   	else
   		flash.now[:danger] = 'Invalid credentials' #Not quite right
@@ -16,10 +17,8 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-  end
-
-  def current_user
-    @current_user ||= User.find_by(id: session[:user_id])
+    log_out
+    redirect_to root_url
   end
 
 end
